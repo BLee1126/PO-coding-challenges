@@ -1,0 +1,193 @@
+package notes;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class Driver {
+    public static int maxPoss(int N, int K, int P, int[] A){
+        //this is default OUTPUT. You can change it.
+        
+        int result=0;
+        Arrays.sort(A);
+        System.out.println(Arrays.toString(A));
+        //write your Logic here:
+        for (int i = 0; i < A.length; i++) {
+        if(i >= N-K-P && i < N-P) {
+            continue;
+        }
+        else {
+            System.out.println("Result is "+result +" A[i] is " +A[i]);
+            result += A[i];
+        }
+        }
+        
+        
+        
+        return result;
+    }
+//	
+	public static String ifExits(int N, String a, String b) {
+		char aTempArray[] = a.toCharArray();
+		char bTempArray[] = b.toCharArray();
+		Arrays.sort(aTempArray);
+		Arrays.sort(bTempArray);
+		
+		int permKey = 0;
+		
+		for(int i = 0; i < bTempArray.length; i++) {
+			if(i == 0) {
+				permKey = aTempArray[i] - bTempArray[i];
+				System.out.println(permKey);
+			}
+			else {
+				if(aTempArray[i] - bTempArray[i] != permKey) {
+					return "NO";
+				}
+				else {
+					continue;
+				}
+			}	
+		}
+		
+		return "YES";
+	}
+	
+//
+//	 public class ListNode {
+//	      int val;
+//	      ListNode next;
+//	      ListNode() {}
+//	      ListNode(int val) { this.val = val; }
+//	      ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+//	 }
+//	 
+//	class Solution {
+//	    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+//	        ListNode runner1 = l1;
+//	        ListNode runner2 = l2;
+//	        String s1 = "";
+//	        String s2 = "";
+//	        while(runner1.next != null){
+//	            s1 = Integer.toString(runner1.val) + s1;
+//	            s2 = Integer.toString(runner2.val) + s2;            
+//	            runner1 = runner1.next;
+//	            runner2 = runner2.next;
+//	        }
+//	        int sum = Integer.parseInt(s1)+ Integer.parseInt(s2);
+//	        
+//	        ListNode l3 = new ListNode();
+//	        ListNode runner3 = l3;
+//	        while(sum%10 > 0){
+//	            runner3.val = sum%10;
+//	            ListNode nextNode = new ListNode();
+//	            runner3.next = nextNode;
+//	            runner3 = nextNode;
+//	            sum = sum/10;
+//	        }
+//	        
+//	        return l3;
+//	    }
+//	}
+
+    public static boolean isPalindrome(int x) {
+        StringBuilder input = new StringBuilder();
+        StringBuilder inputR = new StringBuilder();
+        input.append(Integer.toString(x));
+        inputR.append(Integer.toString(x));
+        inputR.reverse();
+        System.out.println(input);
+        System.out.println(inputR);
+        if(input.toString().equals(inputR.toString())){
+            return true;
+        }
+        else {
+        	return false;
+        }
+    }
+    
+    public static String longestCommonPrefix(String[] strs) {
+        if(strs.length == 1){
+            return strs[0];
+        }
+        Arrays.sort(strs, (a,b)-> Integer.compare(a.length(), b.length()));
+        StringBuilder output = new StringBuilder();
+        output.append(strs[0]);
+
+        for(int i = 1; i < strs.length; i++){
+            if(output.length() == 0){
+                return "";
+            }
+            for(int k = output.length()-1; k >= 0 ; k--){
+                System.out.println("COMPARING "+output.charAt(k) + " == "+strs[i].charAt(k));
+                if(output.charAt(k) != strs[i].charAt(k)){
+                    output.delete(k, output.length());
+                }
+            }
+        }
+        return output.toString();
+    }
+    
+    public static int sorting(int s) {
+    	ArrayList<Integer> arr = new ArrayList<Integer>();
+    	int output = 0;
+    	while(s > 0) {
+    		Integer newNum = s%10;
+    		arr.add(newNum);
+    		s = s/10;
+    	}
+    	Collections.sort(arr, Collections.reverseOrder());
+    	for(Integer i : arr) {
+    		output = 10*output + i;
+    	}
+    	return output;
+    }
+    
+    public static void deleteDuplicate(int N, int A[]) {
+        //this is default OUTPUT. You can change it
+
+        int count = 0;
+        //WRITE YOUR LOGIC HERE:
+        Arrays.sort(A);
+        List<Integer> arr = Arrays.stream(A).boxed().collect(Collectors.toList());
+        System.out.println(arr);
+   			 for(int i = 1; i < A.length; i++){
+   			     if(A[i] ==A[i-1]){
+   			    	 arr.remove(i - 1-count);
+   			    	 count++;
+   			    	 
+   			     }
+   			 }
+		System.out.println(arr);
+
+         System.out.println(arr.size());
+         for(int i=0; i<arr.size(); i++) {
+             System.out.print(A[i]+" ");
+         }
+    }
+    
+    public static void printFunction(String s1, int x){
+        StringBuilder output = new StringBuilder();
+        for(int i = 0; i < s1.length(); i++){
+            output.append(s1.charAt(i));
+        }
+        while(output.length()<16){
+            output.append(' ');
+        }
+       
+        output.append(x/100);
+        x = x%100;      
+        output.append(x/10);
+        x = x%10;
+        output.append(x);
+       
+        System.out.println(output.toString());
+    }
+
+	public static void main(String[] args) {
+		int[] arr = {1,2,3,5,5,8,8,10,10};
+		deleteDuplicate(6, arr);
+	}
+}

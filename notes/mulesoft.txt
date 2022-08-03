@@ -1,0 +1,61 @@
+What is a Mule event? What does it consist of?
+
+A Mule event contains the core information processed by the runtime. It travels through components inside your Mule app following the configured application logic. Note that the Mule event is immutable, so every change to an instance of a Mule event results in the creation of a new instance.
+A Mule event is composed of these objects:
+-A Mule Message contains a message payload and its associated attributes.
+-Variables are Mule event metadata that you use in your flow.
+
+How do you access query parameters? URI parameters? The payload? Variables?
+
+Using Dataweave as follows:
+query parameters: attributes.queryParams.[parameter name]
+URI paramaters: attributes.uriParams.[parameter name]
+the payload: message.payload
+variables: vars.[variable name]
+
+What are some common components?
+
+flow reference - calls another external flow
+logger - helps us monitor and debug by logging
+transfer message - also called transfer components allows us to convert the input data into a new output format
+flow control component - consists of choice and scatter-gather routers.
+validator
+error handler - allows us to control how errors are handled.
+
+
+What is a connector? Examples?
+A connector is software that provides a connection between a Mule flow and an external resource. The resource can be any source of content, such as a database, protocol, or API. You can create a connector with the Anypoint Connector DevKit and the Anypoint Studio IDE. A connector is written in Java version 6 or 7. Connectors access web resources using REST, SOAP, or the Java SDK.
+
+File Connector, Database Connector, HTTP connector
+
+How do we route events in Mule? (e.g. Choice Router, etc.)
+Choice Router and Scatter Gather Router
+choice router - acts like a if/then/else within a flow
+scatter-gather router - First, this router copies (Scatter) a Mule event to two or more parallel routes. The condition is that each route must be a sequence of one or more event processors which is like a sub-flow. Each route in this case will create a Mule event by using a separate thread. Every Mule event will have its own payload, attributes as well as variables.
+Next, this router gathers the created Mule events from each route and then consolidates them together into a new Mule event. After this, it passes this consolidated Mule event to the next event processor. Here the condition is that the S-G router will pass a consolidated Mule event to the next event processor only when every route is completed successfully.
+
+What is Dataweave?
+DataWeave is the programming language designed by MuleSoft for data transformation. It is also the expression language Mule runtime engine uses to configure components and connectors.
+
+DataWeave enables you to build a simple solution for a common use case for integration developers: read and parse data from one format, transform the data, and write it out as a different format. For example, a DataWeave script can receive a CSV file as input and transform it into an array of complex JSON objects, or receive an XML input and write the data out to a flat file format. DataWeave enables developers to focus on the transformation logic instead of thinking about the specifics of reading, parsing, and writing specific data formats in a performant way.
+
+What is a Mule error? What is the difference between on error continue and on error propagate?
+
+Mule errors are exeuction failures.  They have the following components:
+-A description of the problem.
+-A type that is used to characterize the problem.
+-A cause, the underlying Java Throwable that resulted in the failure.
+-An optional error message, which is used to include a proper Mule Message regarding the problem.
+on-error-continue: executes and uses the result of the execution as the result of its owner (as though the owner completed the execution successfully). Any transactions at this point are committed, as well.
+on-error-propagate: rolls back any transactions, executes, and uses that result to re-throw the existing error, meaning its owner is considered to be “failing.”
+
+Is there a default error handler?
+
+By default, unhandled messaging errors are logged and propagated. When a flow is processing a Mule message that raises an error, the normal execution of the flow stops, and the process transfers to the flow’s default error handler, which propagates the error.
+
+What is APIkit?
+APIkit is a tool for building Mule REST or SOAP APIs. You develop APIs based on one of the following modeling languages:
+
+RESTful API Modeling Language (RAML) 1.0 and 0.8 versions
+
+Web Service Description Language (WSDL)

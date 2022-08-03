@@ -1,0 +1,64 @@
+package notes;
+
+import java.util.Arrays;
+
+public class Driver {
+//    public static int maxPoss(int N, int K, int P, int[] A){
+//        //this is default OUTPUT. You can change it.
+//        
+//        int result=0;
+//        Arrays.sort(A, 0, A.length);;
+//        System.out.println(Arrays.toString(A));
+//        //write your Logic here:
+//        for (int i = 0; i < A.length; i++) {
+//        	if(i >= N-K-P && i < N-P) {
+//        		continue;
+//        	}
+//        	else {
+//        		System.out.println("Result is "+result +" A[i] is " +A[i]);
+//        		result += A[i];
+//        	}
+//        }
+//        
+//        
+//        
+//        return result;
+//    }
+	
+	public static String ifExits(int N, String a, String b) {
+		char aTempArray[] = a.toCharArray();
+		char bTempArray[] = b.toCharArray();
+		Arrays.sort(aTempArray);
+		Arrays.sort(bTempArray);
+		
+		String aSorted = new String(aTempArray);
+		String bSorted = new String(bTempArray);
+		System.out.println(aSorted);
+		System.out.println(bSorted);
+		int permKey = 0;
+		
+		for(int i = 0; i < aSorted.length(); i++) {
+			if(i == 0) {
+				permKey = aSorted.charAt(i) - bSorted.charAt(i);
+				System.out.println(permKey);
+			}
+			else {
+				if(aSorted.charAt(i) - bSorted.charAt(i) != permKey) {
+					return "NO";
+				}
+				else {
+					continue;
+				}
+			}	
+		}
+		
+		return "YES";
+	}
+	
+
+	public static void main(String[] args) {
+//		int[] A = {3, 6, 0, 6, 12, 16, 11, 8, 7, 9, 2, 10};
+//		System.out.println(maxPoss(12,3,7,A));
+		System.out.println(ifExits(3, "afp", "hrc"));
+	}
+}

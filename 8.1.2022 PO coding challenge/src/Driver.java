@@ -1,0 +1,38 @@
+import java.util.Arrays;
+
+public class Driver {
+	public static int[] selReverse(int[] arr, int num) {
+		if(arr.length < 1) {
+			return arr;
+		}
+		int[] sortedArr = new int[arr.length]; 
+		if(arr.length <= num) {
+			for(int i = 0; i < arr.length; i++) {
+				sortedArr[i] = arr[arr.length-i-1];
+			}
+			
+		}
+		else {
+			for(int i = 0; i < arr.length; i++) {
+				int revMax = i+num;
+				if(revMax >= arr.length) {
+					revMax = arr.length;
+				}
+				for(int j = 0; j < num; j++) {
+					if(i+j > arr.length-1) {
+						break;
+					}
+					sortedArr[i+j] = arr[revMax-j-1];
+					sortedArr[revMax-j-1] = arr[i+j];
+					
+				}
+				i += num-1;
+			}
+		}
+		return sortedArr;
+	}
+	public static void main(String[] args) {
+		int[] arr = {2,4,6,8,10,12,14,16};
+		System.out.println(Arrays.toString(selReverse(arr, 3)));
+	}
+}
